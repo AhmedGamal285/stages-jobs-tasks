@@ -26,7 +26,8 @@ stages:
       displayName: unit tests backend
  
 - stage: DeployDev
-  dependsOn: []
+  dependsOn:
+    - BuildApp
   displayName: Deploy to DEV environment
   jobs:
   - job: DeployFrontendDev
@@ -42,7 +43,9 @@ stages:
       displayName: deploy backend app to DEV
  
 - stage: DeployProd
-  dependsOn: []
+  dependsOn:
+    - BuildApp
+    - DeployDev
   displayName: Deploy to PROD environment
   pool:
     vmImage: ubuntu-latest
