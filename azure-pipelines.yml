@@ -1,21 +1,12 @@
 trigger:
 - main
-
+ 
 pool:
-  vmImage: ubuntu-latest
-
+vmImage: ubuntu-latest
+ 
 stages:
-- stage: Test
-  displayName: Test Stage
-  dependsOn: []
-  jobs:
-  - job: Test
-    steps:
-    - script: echo Test job
-
 - stage: BuildApp
   displayName: Build Apps
-  dependsOn: Test
   jobs:
   - job: BuildFrontendApp
     displayName: Build Frontend App
@@ -24,7 +15,7 @@ stages:
       displayName: build frontend app
     - script: echo running unit tests for frontend app
       displayName: unit tests frontend
-
+ 
   - job: BuildBackendApp
     displayName: Build Backend App
     steps:
@@ -32,37 +23,37 @@ stages:
       displayName: build backend app
     - script: echo running unit tests for backend app
       displayName: unit tests backend
-
+ 
 - stage: DeployDev
   displayName: Deploy to DEV environment
-  dependsOn: BuildApp
   jobs:
   - job: DeployFrontendDev
     displayName: Deploy frontend to DEV
     steps:
     - script: echo deploying frontend app to DEV
       displayName: deploy frontend app to DEV
-
+  
   - job: DeployBackendDev
     displayName: Deploy backend to DEV
     steps:
     - script: echo deploying backend app to DEV
       displayName: deploy backend app to DEV
-
+ 
 - stage: DeployProd
   displayName: Deploy to PROD environment
-  dependsOn:
-  - BuildApp
-  - DeployDev
+  pool:
+  vmImage: ubuntu-latest
   jobs:
   - job: DeployFrontendProd
     displayName: Deploy frontend to PROD
     steps:
     - script: echo deploying frontend app to PROD
-      displayName: deploy frontend app to PROD
-
+    displayName: deploy frontend app to PROD
+ 
   - job: DeployBackendProd
     displayName: Deploy backend to PROD
+    pool:
+    vmImage: 'vs2017-win2016'
     steps:
     - script: echo deploying backend app to PROD
       displayName: deploy backend app to PROD
