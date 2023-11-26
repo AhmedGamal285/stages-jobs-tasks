@@ -5,8 +5,17 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
+- stage: Test
+  displayName: Test Stage
+  dependsOn: []
+  jobs:
+  - job: Test
+    steps:
+    - script: echo Test job
+
 - stage: BuildApp
   displayName: Build Apps
+  dependsOn: []
   jobs:
   - job: BuildFrontendApp
     displayName: Build Frontend App
@@ -26,6 +35,7 @@ stages:
 
 - stage: DeployDev
   displayName: Deploy to DEV environment
+  dependsOn: []
   jobs:
   - job: DeployFrontendDev
     displayName: Deploy frontend to DEV
@@ -41,6 +51,7 @@ stages:
 
 - stage: DeployProd
   displayName: Deploy to PROD environment
+  dependsOn: []
   pool:
     vmImage: 'macOS-10.14'
   jobs:
