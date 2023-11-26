@@ -2,7 +2,7 @@ trigger:
 - main
  
 pool:
-vmImage: ubuntu-latest
+ vmImage: ubuntu-latest
  
 stages:
 - stage: BuildApp
@@ -42,18 +42,18 @@ stages:
 - stage: DeployProd
   displayName: Deploy to PROD environment
   pool:
-  vmImage: ubuntu-latest
+    vmImage: ubuntu-latest
   jobs:
   - job: DeployFrontendProd
     displayName: Deploy frontend to PROD
     steps:
     - script: echo deploying frontend app to PROD
-    displayName: deploy frontend app to PROD
+      displayName: deploy frontend app to PROD
  
   - job: DeployBackendProd
     displayName: Deploy backend to PROD
     pool:
-    vmImage: 'vs2017-win2016'
+      vmImage: 'vs2017-win2016'
     steps:
     - script: echo deploying backend app to PROD
       displayName: deploy backend app to PROD
