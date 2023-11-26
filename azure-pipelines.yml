@@ -15,7 +15,7 @@ stages:
 
 - stage: BuildApp
   displayName: Build Apps
-  dependsOn: []
+  dependsOn: Test
   jobs:
   - job: BuildFrontendApp
     displayName: Build Frontend App
@@ -35,7 +35,7 @@ stages:
 
 - stage: DeployDev
   displayName: Deploy to DEV environment
-  dependsOn: []
+  dependsOn: BuildApp
   jobs:
   - job: DeployFrontendDev
     displayName: Deploy frontend to DEV
@@ -51,9 +51,9 @@ stages:
 
 - stage: DeployProd
   displayName: Deploy to PROD environment
-  dependsOn: []
-  pool:
-    vmImage: 'macOS-10.14'
+  dependsOn:
+  - BuildApp
+  - DeployDev
   jobs:
   - job: DeployFrontendProd
     displayName: Deploy frontend to PROD
@@ -63,8 +63,6 @@ stages:
 
   - job: DeployBackendProd
     displayName: Deploy backend to PROD
-    pool:
-      vmImage: 'vs2017-win2016'
     steps:
     - script: echo deploying backend app to PROD
       displayName: deploy backend app to PROD
